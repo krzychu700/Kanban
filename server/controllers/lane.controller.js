@@ -43,3 +43,17 @@ export function deleteLane(req, res) {
     });
   });
 }
+
+export function editLane(req, res) {
+  const lane = req.body;
+  if(!lane.id ) {
+    res.status(403).end();
+    return 0;
+  }
+  Lane.findOneAndUpdate({id: lane.id}, lane,  (err, updated) => {
+    if(err) {
+      res.status(500).send(err);
+    }
+    res.json(updated);
+  })
+}
