@@ -1,1 +1,10 @@
 /* Kanban styles */
+.Kanban>div {
+  display: flex;
+  flex-direction: row;
+
+}
+
+.AddLane {
+  color: red;
+}

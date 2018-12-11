@@ -50,7 +50,7 @@ export function editLane(req, res) {
     res.status(403).end();
     return 0;
   }
-  Lane.findOneAndUpdate({id: lane.id}, lane,  (err, updated) => {
+  Lane.findOneAndUpdate({id: lane.id}, lane, {new: true}, (err, updated) => {
     if(err) {
       res.status(500).send(err);
     }

@@ -1,0 +1,25 @@
+.delete {
+  margin-left: 10px;
+  border: none;
+  background-color: red;
+  padding: 4px;
+  color: white;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  opacity: 0;
+}
+
+.value {
+  /* color: red; */
+}
+
+.inputValue {
+  width: 100%;
+  height: auto;
+  padding: 3px 10px;
+  font-size: 1rem;
+}

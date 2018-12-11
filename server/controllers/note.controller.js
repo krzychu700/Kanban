@@ -4,21 +4,22 @@ import Lane from '../models/lane';
 
 export function addNote(req, res) {
   const { note, laneId } = req.body;
-
-  if (!note || !note.task || !laneId) {
+  if(!note || !note.task || !laneId) {
     res.status(400).end();
   }
 
   const newNote = new Note({
-    task: note.task,
+    task: note.task
   });
 
-  newNote.id = uuid();
+  note.id 
+  ? newNote.id = note.id
+  : newNote.id = uuid();
   newNote.save((err, saved) => {
-    if (err) {
+    if(err) {
       res.status(500).send(err);
     }
-    Lane.findOne({ id: laneId })
+    Lane.findOne({id: laneId})
       .then(lane => {
         lane.notes.push(saved);
         return lane.save();
@@ -56,7 +57,7 @@ export function editNote(req, res)  {
     res.status(403).end();
     return 0;
   }
-  Note.findOneAndUpdate({id: note.id}, note, (err, updated) => {
+  Note.findOneAndUpdate({id: note.id}, note, {new: true}, (err, updated) => {
     if(err) {
       res.status(500).send(err);
     }
