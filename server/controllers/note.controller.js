@@ -42,20 +42,33 @@ export function deleteNoteFromLane(req, res) {
           res.status(500).send(err);
         }
         lane.notes.pull(note);
-        return lane.save();
+        
+        lane.save();
       });
 
+      res.status(200).send(note);
     } else {
-      res.status(500).send('Note not found!');
+      res.status(500).send('Bad argument!');
     }
   })
+}
+
+export function deleteNote(req, res) {
+  Note.findOne({ id: req.params.noteId }).exec((err, note) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+
+    note.remove(() => {
+      res.status(200).end();
+    });
+  });
 }
 
 export function editNote(req, res)  {
   const note = req.body;
   if(!note.id || !note.task) {
     res.status(403).end();
-    return 0;
   }
   Note.findOneAndUpdate({id: note.id}, note, {new: true}, (err, updated) => {
     if(err) {

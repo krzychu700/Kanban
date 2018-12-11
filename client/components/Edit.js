@@ -1,47 +1,56 @@
 import React, { Component, PropTypes } from 'react';
-import styles from './Edit.css';
+import styles from './Edit.css'; 
 
 export default class Edit extends Component {
   checkEnter = (e) => {
-    if (e.key === 'Enter') {
+    if(e.key === 'Enter') {
       this.finishEdit(e);
     }
-  }
+  };
+
   finishEdit = (e) => {
     const value = e.target.value;
-  
-    if (this.props.onUpdate) {
+
+    if(this.props.onUpdate) {
       this.props.onUpdate(value.trim());
     }
-  }
+  };
+
   renderDelete = () => {
-    return <button className={styles.delete} onClick={this.props.onDelete}>×</button>;
-  }
+    return <button className={styles.delete} onClick={this.props.onDelete}>x</button>
+  };
+
   renderValue = () => {
-    const { value, onDelete, onValueClick } = this.props;
-  
+    const {value, onDelete, onValueClick } = this.props;
+
     return (
       <div>
-        <span className={styles.value} onClick={onValueClick}>{value}</span>
-        {onDelete ? this.renderDelete() : null}
+        <span className={styles.value} onClick={onValueClick}>
+          {value}
+        </span>
+        {onDelete ? this.renderDelete() : null }  
       </div>
-    );
-  }
+    )
+  };
+
   renderEdit = () => {
     return (
-      <input
+      <input 
+        ref="input"
+        className={styles.inputValue}
         type="text"
         autoFocus
         defaultValue={this.props.value}
         onBlur={this.finishEdit}
         onKeyPress={this.checkEnter}
+        onFocus={(e) => {e.target.select() }}
       />
-    );
-  }
-  render() {
+    )
+  };
 
+  render() {
     return (
-      <div className={this.props.className}>
+      <div>
         {this.props.editing ? this.renderEdit() : this.renderValue()}
       </div>
     );
